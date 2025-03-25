@@ -1,0 +1,12 @@
+{% extends 'users/base.html' %}
+{% block content %}
+
+<form method="post">
+  {% csrf_token %}
+  <input type="text" name="name" value="{{ user.name }}" placeholder="Nome">
+  <input type="text" name="age" value="{{ user.age }}" placeholder="Idade">
+
+  <button type="submit">Atualizar Usuário</button>
+</form>
+
+{% endblock %}

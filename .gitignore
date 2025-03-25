@@ -1,0 +1,18 @@
+# Arquivos compilados pelo Python
+*.pyc
+*.pyo
+__pycache__/
+
+# Diretórios estáticos gerados automaticamente
+staticfiles/
+
+# Configurações sensíveis ou de ambiente
+.env
+venv/
+
+# Logs e arquivos temporários
+*.log
+.vscode/
+.idea/
+*.swp
+*.swo
