@@ -1,12 +1,44 @@
 {% extends 'users/base.html' %}
 {% block content %}
 
-<form method="post">
-  {% csrf_token %}
-  <input type="text" name="name" value="{{ user.name }}" placeholder="Nome">
-  <input type="text" name="age" value="{{ user.age }}" placeholder="Idade">
-
-  <button type="submit">Atualizar Usuário</button>
-</form>
+<div class="container mt-4">
+  <div class="card shadow-lg">
+    <div class="card-header bg-primary text-white">
+      <h3 class="text-center">Atualizar Usuário</h3>
+    </div>
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="name" class="form-label">Nome</label>
+          <input 
+            type="text" 
+            id="name" 
+            name="name" 
+            value="{{ user.name }}" 
+            class="form-control" 
+            placeholder="Digite o nome" 
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="age" class="form-label">Idade</label>
+          <input 
+            type="number" 
+            id="age" 
+            name="age" 
+            value="{{ user.age }}" 
+            class="form-control" 
+            placeholder="Digite a idade" 
+            required
+          />
+        </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-success">Atualizar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

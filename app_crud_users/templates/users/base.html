@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}CRUD de Usuários{% endblock %}</title>
 
-    <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -13,31 +12,87 @@
       crossorigin="anonymous"
     />
 
-    <title>Cadastro de usuários</title>
+    {% block styles %} {% endblock %}
   </head>
 
   <body>
-    <!-- As a heading -->
-    <nav class="navbar navbar-light bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary mb-4">
       <div class="container-fluid">
-        <span class="navbar-brand mb-0 text-light h1">
-          <a style="text-decoration: none; color: white;" href="{% url 'list_users' %}">Listar usuários</a></span
+        <strong class="text-light">CRUD Usuários</strong>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
         >
-        <span class="navbar-brand mb-0 text-light h1">
-          <a style="text-decoration: none; color: white;" href="{% url 'add_users' %}">Adicionar usuários</a></span
-        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link text-light" href="{% url 'list_users' %}"
+                >Listar Usuários</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light" href="{% url 'add_users' %}"
+                >Adicionar Usuários</a
+              >
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
 
-    {% block content %} {% endblock %}
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+      {% if messages %}
+        {% for message in messages %}
+          <div
+            class="toast align-items-center text-bg-{{ message.tags }} border-0"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+            data-bs-delay="2000"
+            data-bs-autohide="true"
+          >
+            <div class="d-flex">
+              <div class="toast-body">
+                {{ message }}
+              </div>
+              <button
+                type="button"
+                class="btn-close btn-close-white me-2 m-auto"
+                data-bs-dismiss="toast"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
 
-    <!-- Optional JavaScript; choose one of the two! -->
+    <div class="container">{% block content %} {% endblock %}</div>
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var toastElements = document.querySelectorAll('.toast');
+        toastElements.forEach(function (toastElement) {
+          var toast = new bootstrap.Toast(toastElement);
+          toast.show();
+        });
+      });
+    </script>
+
+    {% block scripts %} {% endblock %}
   </body>
 </html>

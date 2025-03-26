@@ -1,35 +1,93 @@
-{% extends 'users/base.html' %} 
+{% extends 'users/base.html' %}
 {% block content %}
 
-<div class="container">
-  <h1>Usuários:</h1>
-  <table class="table table-bordered table-striped">
-    <tr>
-      <th>Id</th>
-      <th>Nome</th>
-      <th>Idade</th>
-      <th>Ações</th>
-    </tr>
+<div class="container mt-4">
+  <div class="card shadow-lg">
+    <div class="card-header bg-primary text-white">
+      <h2 class="text-center">Lista de Usuários</h2>
+    </div>
+    <div class="card-body">
+      <table class="table table-hover table-bordered table-striped align-middle">
+        <thead>
+          <tr>
+            <th class="text-center">ID</th>
+            <th>Nome</th>
+            <th>Idade</th>
+            <th class="text-center">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+          <tr>
+            <td class="text-center">{{ user.id_user }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.age }}</td>
+            <td class="text-center">
+              <a
+                href="{% url 'update_user' user.id_user %}"
+                class="btn btn-warning btn-sm text-white me-2"
+              >
+                Editar
+              </a>
+              <button
+                type="button"
+                class="btn btn-danger btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteModal{{ user.id_user }}"
+              >
+                Excluir
+              </button>
 
-    {% for user in users %}
-    <tr>
-      <td>{{user.id_user}}</td>
-      <td>{{user.name}}</td>
-      <td>{{user.age}}</td>
-      <td style="display: flex; align-items: center; justify-content: center">
-        <a
-          href="{% url 'update_user' user.id_user %}"
-          style="margin-right: 20px"
-          class="btn btn-light"
-          >Editar</a
-        >
-        <a href="{% url 'delete_user' user.id_user %}" class="btn btn-danger"
-          >Excluir</a
-        >
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
+              <div
+                class="modal fade"
+                id="deleteModal{{ user.id_user }}"
+                tabindex="-1"
+                aria-labelledby="deleteModalLabel{{ user.id_user }}"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="deleteModalLabel{{ user.id_user }}">
+                        Confirmar Exclusão
+                      </h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      Tem certeza que deseja excluir o usuário <strong>{{ user.name }}</strong>?
+                    </div>
+                    <div class="modal-footer">
+                      <form method="post" action="{% url 'delete_user' user.id_user %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Sim</button>
+                      </form>
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4" class="text-center">Nenhum usuário encontrado.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
 {% endblock %}
