@@ -60,7 +60,7 @@ def updateUser(request, user_id):
       return render(request, 'users/update_user.html', {'user': user})
     except ValidationError as e:
       messages.error(request, e.message)
-    return render(request, 'users/update_user.html', {'user': user})
+      return render(request, 'users/update_user.html', {'user': user})
 
   return render(request, 'users/update_user.html', {'user': user})
 
